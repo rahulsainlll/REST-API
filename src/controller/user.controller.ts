@@ -8,6 +8,7 @@ export async function createUserHandler(
   res: Response
 ) {
   try {
+    console.log("createUser");
     const user = await createUser(req.body);
     return user;
   } catch (e: any) {

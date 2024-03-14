@@ -24,3 +24,5 @@ export type CreateUserInput = Omit<
   TypeOf<typeof createUserSchema>,
   "body.passwordConfirmation"
 >;
+
+

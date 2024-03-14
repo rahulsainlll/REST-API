@@ -3,13 +3,16 @@ import bcrypt from "bcrypt";
 import config from "config";
 
 // Typescript defination
-export interface UserDocument extends mongoose.Document {
+export interface UserInput {
   email: string;
   name: string;
   password: string;
+}
+
+export interface UserDocument extends UserInput, mongoose.Document {
   createdAt: Date;
   updatedAt: Date;
-  comparePassword(candidatePassword: string): Promise<boolean>;
+  comparePassword(candidatePassword: string): Promise<Boolean>;
 }
 
 const userSchema = new mongoose.Schema(
@@ -50,3 +53,4 @@ userSchema.methods.comparePassword = async function (
 const userModel = mongoose.model("User", userSchema);
 
 export default userModel;
+

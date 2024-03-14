@@ -11,7 +11,7 @@ function connect() {
       logger.info("Connected to DB");
     })
     .catch((error) => {
-      logger.error("Could not connect to db");
+      logger.error("Could not connect to db", error);
       process.exit(1);
     });
 }
