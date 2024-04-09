@@ -6,7 +6,7 @@ import validateResources from "./middleware/validateResources";
 function routes(app: Express) {
   app.get("/healthCheck", (req: Request, res: Response) => res.sendStatus(200));
 
-  app.get("/api/users", validateResources(createUserSchema), createUserHandler);
+  app.post("/api/users", validateResources(createUserSchema), createUserHandler);
 }
 
 export default routes;

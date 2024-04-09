@@ -5,7 +5,7 @@ const validate =
   (schema: AnyZodObject) =>
   (req: Request, res: Response, next: NextFunction) => {
     try {
-      console.log("validateE")
+      console.log("validateE");
       schema.parse({
         body: req.body,
         query: req.query,
@@ -19,3 +19,5 @@ const validate =
   };
 
 export default validate;
+
+
