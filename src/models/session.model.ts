@@ -7,7 +7,7 @@ export interface UserInput {
   userAgent: string;
 }
 
-export interface SchemaDocument extends UserInput, mongoose.Document {
+export interface SessionDoucment extends UserInput, mongoose.Document {
   createdAt: Date;
   updatedAt: Date;
 }
