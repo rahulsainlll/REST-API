@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { validatePassword } from "../service/user.service";
-import { createSession } from "../service/session.service";
+import { createSession, findSessions } from "../service/session.service";
 import config from "config";
 import { signJwt } from "../utils/jwt.utils";
 
@@ -11,16 +11,14 @@ import { signJwt } from "../utils/jwt.utils";
 // return axxess & refresh token
 
 export async function createUserSessionHandler(req: Request, res: Response) {
-  // validate the user password
   const user = await validatePassword(req.body);
 
   if (!user) {
     return res.status(400).send("Invalid email or password");
   }
-  // create a session
+
   const session = await createSession(user._id, req.get("user-agent") || "");
 
-  // create a access token
   const accessToken = signJwt(
     { ...user, session: session._id },
     {
@@ -28,7 +26,6 @@ export async function createUserSessionHandler(req: Request, res: Response) {
     }
   );
 
-  // create a refresh token
   const refreshToken = signJwt(
     { ...user, session: session._id },
     {
@@ -36,7 +33,17 @@ export async function createUserSessionHandler(req: Request, res: Response) {
     }
   );
 
-  // return axxess & refresh token
-
   return res.send({ accessToken, refreshToken });
+}
+
+export async function getUserSessionsHandler(req: Request, res: Response) {
+  const userId = res.locals.user._id;
+
+  console.log(userId);
+
+  const sessions = await findSessions({ user: userId, valid: false });
+
+  console.log(sessions);
+
+  return res.send(sessions);
 }
